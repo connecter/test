@@ -1,0 +1,14 @@
+sudo: required
+
+services:
+- docker
+
+language: generic
+
+script:
+- docker build -t sipxecs .
+
+after_success:
+- docker tag sipxecs connecter/sipxecs:canary
+- docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+- docker push connecter/sipxecs:canary
